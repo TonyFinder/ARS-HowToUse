@@ -1,5 +1,50 @@
+const content = {
+    ru: {
+        shopText: 'Магазин плёнок',
+        shopLink: 'https://arsnails.ru',
+        instructionText: 'Инструкция по нанесению плёнок',
+        instructionLink: 'https://arsnails.ru/instruction',
+        courseText: 'Онлайн-курс "Плёнки"',
+        courseLink: 'https://academy.arsnails.ru'
+    },
+    en: {
+        shopText: 'Nail wraps shop',
+        shopLink: 'https://arsnails.com',
+        instructionText: 'How to apply nail wraps instruction',
+        instructionLink: 'https://arsnails.ru/howtouse',
+        courseText: '"Nail wraps" online course',
+        courseLink: 'https://academy.arsnails.ru'
+    }
+};
+
 // Add subtle interactive effects
 document.addEventListener('DOMContentLoaded', function() {
+    const langBtns = document.querySelectorAll('.lang-btn');
+    const linkShop = document.getElementById('link-shop');
+    const textShop = document.getElementById('text-shop');
+    const linkInstruction = document.getElementById('link-instruction');
+    const textInstruction = document.getElementById('text-instruction');
+    const linkCourse = document.getElementById('link-course');
+    const textCourse = document.getElementById('text-course');
+
+    langBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            langBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const lang = btn.getAttribute('data-lang');
+            
+            textShop.textContent = content[lang].shopText;
+            linkShop.href = content[lang].shopLink;
+            
+            textInstruction.textContent = content[lang].instructionText;
+            linkInstruction.href = content[lang].instructionLink;
+            
+            textCourse.textContent = content[lang].courseText;
+            linkCourse.href = content[lang].courseLink;
+        });
+    });
+
     const buttons = document.querySelectorAll('.link-button');
     
     buttons.forEach(button => {
@@ -54,4 +99,31 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Add stars background
+function createStars() {
+    const container = document.getElementById('stars-container');
+    if (!container) return;
+    
+    const starCount = window.innerWidth < 768 ? 70 : 150;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        const size = Math.random() * 2 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        // Randomize twinkling
+        star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        
+        container.appendChild(star);
+    }
+}
+document.addEventListener('DOMContentLoaded', createStars);
 
